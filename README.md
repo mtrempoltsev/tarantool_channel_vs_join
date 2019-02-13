@@ -65,16 +65,6 @@ iterations:          100
 benchmarking of channel..
 2.0956809520721 seconds
 benchmarking of join..
-49.59193110466 seconds
-```
-
-```
-workers:             100
-chance of error, %:  50
-iterations:          100
-benchmarking of channel..
-2.0956809520721 seconds
-benchmarking of join..
 47.416046857834 seconds
 ```
 
