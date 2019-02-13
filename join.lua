@@ -11,14 +11,22 @@ local function start(workers, chance_of_error, timeout)
         table.insert(fibers, fib)
     end
 
+    local ok, res, err
+    local stop_work = false
     for _, fib in ipairs(fibers) do
-        local _, res, err = fib:join()
-        if res == nil then
-            return nil, res
+        if stop_work then
+            fib:cancel()
+        else
+            ok, res, err = fib:join()
+            if res == nil then
+                err = res
+                res = nil
+                stop_work = true
+            end
         end
     end
 
-    return true
+    return res, err
 end
 
 return { start = start }
