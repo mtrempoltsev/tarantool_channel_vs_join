@@ -33,9 +33,9 @@ workers:             10
 chance of error, %:  98
 iterations:          100
 benchmarking of channel..
-79.369192123413 seconds
+82.486378908157 seconds
 benchmarking of join..
-87.642042160034 seconds
+45.676003217697 seconds
 ```
 
 ```
@@ -43,9 +43,9 @@ workers:             10
 chance of error, %:  50
 iterations:          100
 benchmarking of channel..
-18.525407075882	seconds
+21.051764011383 seconds
 benchmarking of join..
-46.040665149689	seconds
+48.225121021271 seconds
 ```
 
 ```
@@ -53,11 +53,31 @@ workers:             100
 chance of error, %:  98
 iterations:          100
 benchmarking of channel..
-45.532202005386 seconds
+38.991818904877 seconds
 benchmarking of join..
-94.677665948868 seconds
+49.59193110466 seconds
+```
+
+```
+workers:             100
+chance of error, %:  50
+iterations:          100
+benchmarking of channel..
+2.0956809520721 seconds
+benchmarking of join..
+49.59193110466 seconds
+```
+
+```
+workers:             100
+chance of error, %:  50
+iterations:          100
+benchmarking of channel..
+2.0956809520721 seconds
+benchmarking of join..
+47.416046857834 seconds
 ```
 
 #### Заключение
 
-Предположение подтвердилось опытным путем.
+Реализация на join ожидаемо оказалась очень зависима от процента ошибок, но в ситуации с малым количеством ошибок и малым числом процессов быстрее реализации на channel.
