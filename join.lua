@@ -12,21 +12,45 @@ local function start(workers, chance_of_error, timeout)
     end
 
     local ok, res, err
-    local stop_work = false
-    for _, fib in ipairs(fibers) do
-        if stop_work then
-            fib:cancel()
-        else
-            ok, res, err = fib:join()
-            if res == nil then
-                err = res
-                res = nil
-                stop_work = true
+
+    local poll_fiber = fiber.new(function()
+        local stop_work = false
+        for _, fib in ipairs(fibers) do
+            if stop_work then
+                fib:cancel()
+            else
+                ok, res, err = fib:join()
+                if res == nil then
+                    err = res
+                    res = nil
+                    stop_work = true
+                end
             end
         end
+
+        return res, err
+    end)
+
+    local is_timeout = false
+
+    local timeout_fiber = fiber.create(function()
+        fiber.sleep(timeout)
+        if poll_fiber:status() == 'running' then
+            is_timeout = true
+            poll_fiber:cancel()
+        end
+    end)
+
+    poll_fiber:set_joinable(true)
+    poll_fiber:join()
+
+    if is_timeout then
+        return nil, 'timeout'
     end
 
-    return res, err
+    timeout_fiber:cancel()
+
+    local ok, res
 end
 
 return { start = start }
