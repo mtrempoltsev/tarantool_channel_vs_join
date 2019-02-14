@@ -29,45 +29,45 @@ local iterations = 100
 #### Прогон тестов на моей машине
 
 ```
-workers:             10
-chance of error, %:  98
-iterations:          100
+workers:            10
+chance of error, %: 2
+iterations:         100
 benchmarking of channel..
-82.486378908157 seconds
+78.240322113037 seconds
 benchmarking of join..
-45.676003217697 seconds
+89.086318969727 seconds
 ```
 
 ```
-workers:             10
-chance of error, %:  50
-iterations:          100
+workers:            10
+chance of error, %: 50
+iterations:         100
 benchmarking of channel..
-21.051764011383 seconds
+16.547489881516 seconds
 benchmarking of join..
-48.225121021271 seconds
+58.657691955566 seconds
 ```
 
 ```
-workers:             100
-chance of error, %:  98
-iterations:          100
+workers:            100
+chance of error, %: 2
+iterations:         100
 benchmarking of channel..
-38.991818904877 seconds
+38.712564945221 seconds
 benchmarking of join..
-49.59193110466 seconds
+94.660372018814 seconds
 ```
 
 ```
-workers:             100
-chance of error, %:  50
-iterations:          100
+workers:            100
+chance of error, %: 50
+iterations:         100
 benchmarking of channel..
-2.0956809520721 seconds
+1.9756760597229 seconds
 benchmarking of join..
-47.416046857834 seconds
+61.734074115753 seconds```
 ```
 
 #### Заключение
 
-Реализация на join ожидаемо оказалась очень зависима от процента ошибок, но в ситуации с малым количеством ошибок и малым числом процессов быстрее реализации на channel.
+Опытным путем удалось подтвердить, что реализация на join оказалась очень зависима от процента ошибок и количества ожидаемых процессов и является значительно менее эффективной, чем реализация на channel.
